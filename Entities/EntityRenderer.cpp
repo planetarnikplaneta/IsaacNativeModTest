@@ -592,47 +592,54 @@ namespace ViewPoint
             if (!room || !door)
                 return result;
 
-            const unsigned int width = room->_gridWidth;
-            const unsigned int height = room->_gridHeight;
+            const unsigned int width =
+                static_cast<unsigned int>(room->_gridWidth);
+            const unsigned int height =
+                static_cast<unsigned int>(room->_gridHeight);
 
-            if (width == 0 || height == 0)
-                return result;
+            const unsigned int cellIndex =
+                door->_gridIndex < width * height ?
+                    static_cast<unsigned int>(door->_gridIndex) :
+                    room->_doorGridPositions[doorSlot];
 
-            unsigned int gridIndex = 0;
-            if (doorSlot >= 0 && doorSlot < 8)
-                gridIndex = room->_doorGridPositions[doorSlot];
+            const unsigned int row = cellIndex / width;
+            const unsigned int column = cellIndex % width;
 
-            const unsigned int row = gridIndex / width;
-            const unsigned int column = gridIndex % width;
+            const float centerX =
+                ((static_cast<float>(width) - 1.0f) * 0.5f -
+                 static_cast<float>(column)) * TILE_SIZE;
 
-            result.x = ((static_cast<float>(width - 1) * 0.5f -
-                         static_cast<float>(column)) *
-                        TILE_SIZE);
+            const float centerZ =
+                ((static_cast<float>(height) - 1.0f) * 0.5f -
+                 static_cast<float>(row)) * TILE_SIZE;
 
-            result.z = ((static_cast<float>(height - 1) * 0.5f -
-                         static_cast<float>(row)) *
-                        TILE_SIZE);
-
+            result.x = centerX;
             result.y = FLOOR_Y + 0.12f;
+            result.z = centerZ;
 
             switch (GetDoorWallSide(doorSlot))
             {
                 case DOOR_WALL_NORTH:
-                    result.z -= 0.56f;
-                    result.x += 0.08f;
+                    result.z -= 0.18f;
+                    result.x += 0.02f;
+                    result.y = FLOOR_Y + 0.22f;
                     break;
                 case DOOR_WALL_EAST:
-                    result.x += 0.58f;
-                    result.z -= 0.12f;
+                    result.x += 0.40f;
+                    result.z -= 0.18f;
+                    result.y = FLOOR_Y + 0.18f;
                     break;
                 case DOOR_WALL_SOUTH:
-                    result.z += 0.62f;
+                    result.z += 0.42f;
+                    result.y = FLOOR_Y + 0.20f;
                     break;
                 case DOOR_WALL_WEST:
-                    result.x -= 0.58f;
-                    result.z -= 0.12f;
+                    result.x -= 0.40f;
+                    result.z -= 0.18f;
+                    result.y = FLOOR_Y + 0.18f;
                     break;
                 default:
+                    result.y = FLOOR_Y + 0.12f;
                     break;
             }
 
