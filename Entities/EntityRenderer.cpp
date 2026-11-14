@@ -46,7 +46,7 @@ namespace ViewPoint
     {
         constexpr float PI = 3.14159265358979323846f;
         constexpr float PIXELS_PER_TILE = 40.0f;
-        constexpr float FLOOR_Y = 0.0f;
+        constexpr float FLOOR_Y = -1.5f;
         constexpr float COLLISION_Y_OFFSET = 0.035f;
         constexpr int CAPSULE_SEGMENTS = 24;
 
@@ -601,22 +601,22 @@ namespace ViewPoint
                 case DOOR_WALL_NORTH:
                     result.z -= 2.59f;
                     result.x += 0.50f;
-                    result.y = FLOOR_Y + 0.92f;
+                    result.y = FLOOR_Y + 0.0f;
                     break;
                 case DOOR_WALL_EAST:
                     result.x += -2.05f;
                     result.z -= 4.5f;
-                    result.y = FLOOR_Y + 0.54f;
+                    result.y = FLOOR_Y + 0.0f;
                     break;
                 case DOOR_WALL_SOUTH:
                     result.x += 0.5f;
                     result.z += -4.65f;
-                    result.y = FLOOR_Y + 0.165f;
+                    result.y = FLOOR_Y + 0.02f;
                     break;
                 case DOOR_WALL_WEST:
                     result.x -= -2.05f;
                     result.z -= 4.5f;
-                    result.y = FLOOR_Y + 0.54f;
+                    result.y = FLOOR_Y + -0.5f;
                     break;
                 default:
                     result.y = FLOOR_Y + 0.24f;
