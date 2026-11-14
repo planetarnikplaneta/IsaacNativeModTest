@@ -592,6 +592,8 @@ namespace ViewPoint
             if (!room || !door)
                 return result;
 
+            constexpr float TILE_SIZE = 1.0f;
+
             const unsigned int width =
                 static_cast<unsigned int>(room->_gridWidth);
             const unsigned int height =
