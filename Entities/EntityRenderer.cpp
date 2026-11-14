@@ -46,7 +46,7 @@ namespace ViewPoint
     {
         constexpr float PI = 3.14159265358979323846f;
         constexpr float PIXELS_PER_TILE = 40.0f;
-        constexpr float FLOOR_Y = -1.5f;
+        constexpr float FLOOR_Y = 0.0f;
         constexpr float COLLISION_Y_OFFSET = 0.035f;
         constexpr int CAPSULE_SEGMENTS = 24;
 
