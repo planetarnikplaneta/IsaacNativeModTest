@@ -592,34 +592,47 @@ namespace ViewPoint
             if (!room || !door)
                 return result;
 
-            Vector position(0.0f, 0.0f);
-            door->GetRenderPosition(&position);
-            result = IsaacToWorld(position, room);
+            const unsigned int width = room->_gridWidth;
+            const unsigned int height = room->_gridHeight;
+
+            if (width == 0 || height == 0)
+                return result;
+
+            unsigned int gridIndex = 0;
+            if (doorSlot >= 0 && doorSlot < 8)
+                gridIndex = room->_doorGridPositions[doorSlot];
+
+            const unsigned int row = gridIndex / width;
+            const unsigned int column = gridIndex % width;
+
+            result.x = ((static_cast<float>(width - 1) * 0.5f -
+                         static_cast<float>(column)) *
+                        TILE_SIZE);
+
+            result.z = ((static_cast<float>(height - 1) * 0.5f -
+                         static_cast<float>(row)) *
+                        TILE_SIZE);
+
+            result.y = FLOOR_Y + 0.12f;
 
             switch (GetDoorWallSide(doorSlot))
             {
                 case DOOR_WALL_NORTH:
-                    result.z -= 2.59f;
-                    result.x += 0.50f;
-                    result.y = FLOOR_Y + 0.0f;
+                    result.z -= 0.56f;
+                    result.x += 0.08f;
                     break;
                 case DOOR_WALL_EAST:
-                    result.x += -2.05f;
-                    result.z -= 4.5f;
-                    result.y = FLOOR_Y + 0.0f;
+                    result.x += 0.58f;
+                    result.z -= 0.12f;
                     break;
                 case DOOR_WALL_SOUTH:
-                    result.x += 0.5f;
-                    result.z += -4.65f;
-                    result.y = FLOOR_Y + 0.02f;
+                    result.z += 0.62f;
                     break;
                 case DOOR_WALL_WEST:
-                    result.x -= -2.05f;
-                    result.z -= 4.5f;
-                    result.y = FLOOR_Y + -0.5f;
+                    result.x -= 0.58f;
+                    result.z -= 0.12f;
                     break;
                 default:
-                    result.y = FLOOR_Y + 0.24f;
                     break;
             }
 
